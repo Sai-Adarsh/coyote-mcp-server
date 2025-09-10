@@ -14,38 +14,32 @@ npm run setup-claude-cli  # or setup-claude, setup-vscode, setup-windsurf, setup
 
 ## Usage Commands
 
-**Test the setup:**
+**Interactive Mode (Recommended):**
 ```bash
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to show a dialog with 'Hello World'"
+claude --mcp-config ~/.config/claude-cli/mcp.json
+```
+Then type any command like:
+- `Use AppleScript to show a dialog with 'Hello World'`
+- `Use AppleScript to open Calculator`
+- `Use AppleScript to open Safari and go to google.com`
+
+**Quick Commands:**
+```bash
+# Test the setup
+claude --mcp-config ~/.config/claude-cli/mcp.json --print "Use AppleScript to show a dialog with 'Hello World'"
+
+# Open applications
+claude --mcp-config ~/.config/claude-cli/mcp.json --print "Use AppleScript to open Calculator"
+claude --mcp-config ~/.config/claude-cli/mcp.json --print "Use AppleScript to open Safari"
+
+# Navigate websites
+claude --mcp-config ~/.config/claude-cli/mcp.json --print "Use AppleScript to open Safari and go to google.com"
+
+# Create notifications
+claude --mcp-config ~/.config/claude-cli/mcp.json --print "Use AppleScript to show a notification with title 'Test' and message 'Hello from MCP'"
 ```
 
-**Open applications:**
-```bash
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open Calculator"
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open Safari"
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open TextEdit"
-```
-
-**Navigate websites:**
-```bash
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open Safari and go to google.com"
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open Safari and go to yahoo.com"
-```
-
-**Create notifications:**
-```bash
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to show a notification with title 'Test' and message 'Hello from MCP'"
-```
-
-**Automate Calculator:**
-```bash
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open Calculator and perform calculation 25 + 75"
-```
-
-**Create text documents:**
-```bash
-claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open TextEdit and create a document with text 'Hello from Coyote MCP'"
-```
+**Note:** Claude CLI will ask for permission before executing AppleScript commands. Grant permission when prompted to allow automation.
 
 ## Quick Setup Commands
 
