@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Coyote MCP Server - Windsurf Setup Script
-# This script installs and configures the Coyote MCP Server for Windsurf
+# Coyote MCP Server - Cursor Setup Script
+# This script installs and configures the Coyote MCP Server for Cursor
 
 set -e
 
-echo "�️  Setting up Coyote MCP Server for Windsurf..."
+echo "🎯 Setting up Coyote MCP Server for Cursor..."
 
 # Colors for output
 RED='\033[0;31m'
@@ -33,7 +33,7 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
-echo -e "${BLUE}� Installing Coyote MCP Server...${NC}"
+echo -e "${BLUE}📦 Installing Coyote MCP Server...${NC}"
 
 # Install dependencies and build
 npm install
@@ -44,14 +44,14 @@ npm link
 
 echo -e "${GREEN}✅ Coyote MCP Server installed globally${NC}"
 
-# Windsurf config directory and file
-WINDSURF_CONFIG_DIR="$HOME/.codeium/windsurf"
-CONFIG_FILE="$WINDSURF_CONFIG_DIR/mcp_config.json"
+# Cursor config directory and file
+CURSOR_CONFIG_DIR="$HOME/.cursor"
+CONFIG_FILE="$CURSOR_CONFIG_DIR/mcp.json"
 
-# Create Windsurf config directory if it doesn't exist
-if [ ! -d "$WINDSURF_CONFIG_DIR" ]; then
-    echo -e "${BLUE}� Creating Windsurf config directory...${NC}"
-    mkdir -p "$WINDSURF_CONFIG_DIR"
+# Create Cursor config directory if it doesn't exist
+if [ ! -d "$CURSOR_CONFIG_DIR" ]; then
+    echo -e "${BLUE}📁 Creating Cursor config directory...${NC}"
+    mkdir -p "$CURSOR_CONFIG_DIR"
 fi
 
 # Create backup if config file exists
@@ -73,7 +73,7 @@ MCP_CONFIG='{
 
 # Check if config file exists and has content
 if [ -f "$CONFIG_FILE" ] && [ -s "$CONFIG_FILE" ]; then
-    echo -e "${BLUE}🔧 Merging with existing Windsurf MCP configuration...${NC}"
+    echo -e "${BLUE}🔧 Merging with existing Cursor MCP configuration...${NC}"
     
     # Use Node.js to merge JSON configurations
     node -e "
@@ -103,7 +103,7 @@ if [ -f "$CONFIG_FILE" ] && [ -s "$CONFIG_FILE" ]; then
     }
     "
 else
-    echo -e "${BLUE}📝 Creating new Windsurf MCP configuration...${NC}"
+    echo -e "${BLUE}📝 Creating new Cursor MCP configuration...${NC}"
     echo "$MCP_CONFIG" | node -e "
     const fs = require('fs');
     let input = '';
@@ -116,29 +116,37 @@ else
     "
 fi
 
-echo -e "${GREEN}🎉 Coyote MCP Server setup complete for Windsurf!${NC}"
+echo -e "${GREEN}🎉 Coyote MCP Server setup complete for Cursor!${NC}"
 echo ""
 echo -e "${BLUE}📋 Configuration Summary:${NC}"
 echo -e "   • Server: ${GREEN}coyote.*use${NC}"
 echo -e "   • Command: ${GREEN}coyote-mcp-server${NC}"
 echo -e "   • Config: ${GREEN}$CONFIG_FILE${NC}"
+echo -e "   • Scope: ${GREEN}Global (all projects)${NC}"
 echo ""
 echo -e "${BLUE}🚀 Next Steps:${NC}"
-echo -e "   1. ${YELLOW}Restart Windsurf${NC} to load the new MCP configuration"
-echo -e "   2. Open the ${YELLOW}Cascade panel${NC} in Windsurf"
-echo -e "   3. Click on ${YELLOW}Plugins${NC} in the top right menu"
-echo -e "   4. Look for ${YELLOW}coyote.*use${NC} server and click the refresh button"
-echo -e "   5. Enable the ${YELLOW}run_applescript${NC} tool"
+echo -e "   1. ${YELLOW}Restart Cursor${NC} to load the new MCP configuration"
+echo -e "   2. Open any project or create a new one"
+echo -e "   3. Open ${YELLOW}Chat/Agent${NC} and look for MCP tools"
+echo -e "   4. The ${YELLOW}run_applescript${NC} tool should be available"
+echo -e "   5. You can toggle MCP tools on/off in the chat interface"
 echo ""
 echo -e "${BLUE}🔧 Available Tool:${NC}"
 echo -e "   • ${GREEN}run_applescript${NC}: Execute AppleScript commands on macOS"
 echo ""
-echo -e "${BLUE}💡 Usage Example:${NC}"
-echo -e "   Ask Cascade: \"${YELLOW}Use AppleScript to display a notification saying 'Hello from Windsurf!'${NC}\""
+echo -e "${BLUE}💡 Usage Examples:${NC}"
+echo -e "   Ask Cursor Agent: \"${YELLOW}Use the run_applescript tool to display a notification${NC}\""
+echo -e "   Or simply: \"${YELLOW}Show me a dialog with 'Hello from Cursor!'${NC}\""
+echo -e "   Or: \"${YELLOW}Open Calculator using AppleScript${NC}\""
+echo ""
+echo -e "${BLUE}⚙️  Configuration Options:${NC}"
+echo -e "   • ${YELLOW}Global config${NC}: ~/.cursor/mcp.json (affects all projects)"
+echo -e "   • ${YELLOW}Project config${NC}: .cursor/mcp.json (project-specific)"
 echo ""
 echo -e "${BLUE}📚 Documentation:${NC}"
-echo -e "   • Windsurf MCP: ${BLUE}https://docs.windsurf.com/windsurf/cascade/mcp${NC}"
+echo -e "   • Cursor MCP: ${BLUE}https://docs.cursor.com/en/context/mcp${NC}"
 echo -e "   • MCP Protocol: ${BLUE}https://modelcontextprotocol.io/${NC}"
+echo -e "   • Cursor Tools: ${BLUE}https://docs.cursor.com/en/tools${NC}"
 echo ""
 
 # Verify the configuration
@@ -156,3 +164,6 @@ else
 fi
 
 echo -e "${GREEN}✨ Setup completed successfully!${NC}"
+echo ""
+echo -e "${BLUE}💡 Pro Tip:${NC} You can also install MCP servers from Cursor's built-in"
+echo -e "   tool store at ${YELLOW}https://docs.cursor.com/en/tools${NC} for one-click installation!"

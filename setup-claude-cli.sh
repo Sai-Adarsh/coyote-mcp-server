@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Coyote MCP Server - Windsurf Setup Script
-# This script installs and configures the Coyote MCP Server for Windsurf
+# Coyote MCP Server - Claude CLI Setup Script
+# This script installs and configures the Coyote MCP Server for Claude CLI
 
 set -e
 
-echo "�️  Setting up Coyote MCP Server for Windsurf..."
+echo "🤖 Setting up Coyote MCP Server for Claude CLI..."
 
 # Colors for output
 RED='\033[0;31m'
@@ -33,25 +33,35 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
-echo -e "${BLUE}� Installing Coyote MCP Server...${NC}"
+# Check if Claude CLI is installed
+if ! command -v claude &> /dev/null && ! command -v claude-cli &> /dev/null; then
+    echo -e "${YELLOW}⚠️  Claude CLI not found. You may need to install it first:${NC}"
+    echo -e "   ${BLUE}pip install claude-cli${NC}"
+    echo -e "   ${BLUE}or${NC}"
+    echo -e "   ${BLUE}npm install -g @anthropic/claude-cli${NC}"
+    echo ""
+    echo -e "${BLUE}Continuing with MCP server setup...${NC}"
+fi
+
+echo -e "${BLUE}📦 Installing Coyote MCP Server...${NC}"
 
 # Install dependencies and build
 npm install
 npm run build
 
 # Link globally so it can be used from anywhere
-npm link
+npm link --force
 
 echo -e "${GREEN}✅ Coyote MCP Server installed globally${NC}"
 
-# Windsurf config directory and file
-WINDSURF_CONFIG_DIR="$HOME/.codeium/windsurf"
-CONFIG_FILE="$WINDSURF_CONFIG_DIR/mcp_config.json"
+# Claude CLI config directory and file
+CLAUDE_CLI_CONFIG_DIR="$HOME/.config/claude-cli"
+CONFIG_FILE="$CLAUDE_CLI_CONFIG_DIR/mcp.json"
 
-# Create Windsurf config directory if it doesn't exist
-if [ ! -d "$WINDSURF_CONFIG_DIR" ]; then
-    echo -e "${BLUE}� Creating Windsurf config directory...${NC}"
-    mkdir -p "$WINDSURF_CONFIG_DIR"
+# Create Claude CLI config directory if it doesn't exist
+if [ ! -d "$CLAUDE_CLI_CONFIG_DIR" ]; then
+    echo -e "${BLUE}📁 Creating Claude CLI config directory...${NC}"
+    mkdir -p "$CLAUDE_CLI_CONFIG_DIR"
 fi
 
 # Create backup if config file exists
@@ -64,7 +74,7 @@ fi
 # MCP Server configuration
 MCP_CONFIG='{
   "mcpServers": {
-    "coyote.*use": {
+    "coyote-user": {
       "command": "coyote-mcp-server",
       "args": []
     }
@@ -73,7 +83,7 @@ MCP_CONFIG='{
 
 # Check if config file exists and has content
 if [ -f "$CONFIG_FILE" ] && [ -s "$CONFIG_FILE" ]; then
-    echo -e "${BLUE}🔧 Merging with existing Windsurf MCP configuration...${NC}"
+    echo -e "${BLUE}🔧 Merging with existing Claude CLI MCP configuration...${NC}"
     
     # Use Node.js to merge JSON configurations
     node -e "
@@ -89,8 +99,8 @@ if [ -f "$CONFIG_FILE" ] && [ -s "$CONFIG_FILE" ]; then
             existing.mcpServers = {};
         }
         
-        // Add or update the coyote.*use server
-        existing.mcpServers['coyote.*use'];
+        // Add or update the coyote-user server
+        existing.mcpServers['coyote-user'] = newConfig.mcpServers['coyote-user'];
         
         // Write back the merged configuration
         fs.writeFileSync(path, JSON.stringify(existing, null, 2));
@@ -103,7 +113,7 @@ if [ -f "$CONFIG_FILE" ] && [ -s "$CONFIG_FILE" ]; then
     }
     "
 else
-    echo -e "${BLUE}📝 Creating new Windsurf MCP configuration...${NC}"
+    echo -e "${BLUE}📝 Creating new Claude CLI MCP configuration...${NC}"
     echo "$MCP_CONFIG" | node -e "
     const fs = require('fs');
     let input = '';
@@ -116,29 +126,44 @@ else
     "
 fi
 
-echo -e "${GREEN}🎉 Coyote MCP Server setup complete for Windsurf!${NC}"
+echo -e "${GREEN}🎉 Coyote MCP Server setup complete for Claude CLI!${NC}"
 echo ""
 echo -e "${BLUE}📋 Configuration Summary:${NC}"
-echo -e "   • Server: ${GREEN}coyote.*use${NC}"
+echo -e "   • Server: ${GREEN}coyote-user${NC}"
 echo -e "   • Command: ${GREEN}coyote-mcp-server${NC}"
 echo -e "   • Config: ${GREEN}$CONFIG_FILE${NC}"
 echo ""
-echo -e "${BLUE}🚀 Next Steps:${NC}"
-echo -e "   1. ${YELLOW}Restart Windsurf${NC} to load the new MCP configuration"
-echo -e "   2. Open the ${YELLOW}Cascade panel${NC} in Windsurf"
-echo -e "   3. Click on ${YELLOW}Plugins${NC} in the top right menu"
-echo -e "   4. Look for ${YELLOW}coyote.*use${NC} server and click the refresh button"
-echo -e "   5. Enable the ${YELLOW}run_applescript${NC} tool"
+echo -e "${BLUE}🚀 Usage Instructions:${NC}"
+echo ""
+echo -e "${YELLOW}Option 1 - Using config file (with print mode):${NC}"
+echo -e "   ${GREEN}claude --mcp-config $CONFIG_FILE --print \"Use AppleScript to show a dialog\"${NC}"
+echo ""
+echo -e "${YELLOW}Option 2 - Direct MCP server specification:${NC}"
+echo -e "   ${GREEN}claude --mcp coyote-mcp-server --print \"Show me a notification with Hello World\"${NC}"
+echo ""
+echo -e "${YELLOW}Option 3 - Interactive mode:${NC}"
+echo -e "   ${GREEN}claude --mcp-config $CONFIG_FILE${NC}"
+echo -e "   Then ask: \"${YELLOW}Use AppleScript to open Calculator${NC}\""
+echo ""
+echo -e "${YELLOW}Option 4 - Bypass permissions (for automation):${NC}"
+echo -e "   ${GREEN}claude --mcp-config $CONFIG_FILE --print --dangerously-skip-permissions \"Use run_applescript tool\"${NC}"
 echo ""
 echo -e "${BLUE}🔧 Available Tool:${NC}"
 echo -e "   • ${GREEN}run_applescript${NC}: Execute AppleScript commands on macOS"
 echo ""
-echo -e "${BLUE}💡 Usage Example:${NC}"
-echo -e "   Ask Cascade: \"${YELLOW}Use AppleScript to display a notification saying 'Hello from Windsurf!'${NC}\""
+echo -e "${BLUE}💡 Usage Examples:${NC}"
+echo -e "   \"${YELLOW}Use AppleScript to display a notification with 'Hello from Claude CLI!'${NC}\""
+echo -e "   \"${YELLOW}Run AppleScript to open Finder${NC}\""
+echo -e "   \"${YELLOW}Execute AppleScript to show the current time${NC}\""
 echo ""
-echo -e "${BLUE}📚 Documentation:${NC}"
-echo -e "   • Windsurf MCP: ${BLUE}https://docs.windsurf.com/windsurf/cascade/mcp${NC}"
+echo -e "${BLUE}📚 Claude CLI Installation:${NC}"
+echo -e "   If you don't have Claude CLI installed yet:"
+echo -e "   • ${YELLOW}pip install claude-cli${NC}"
+echo -e "   • ${YELLOW}npm install -g @anthropic/claude-cli${NC}"
+echo ""
+echo -e "${BLUE}📖 Documentation:${NC}"
 echo -e "   • MCP Protocol: ${BLUE}https://modelcontextprotocol.io/${NC}"
+echo -e "   • Anthropic Docs: ${BLUE}https://docs.anthropic.com/${NC}"
 echo ""
 
 # Verify the configuration
@@ -156,3 +181,6 @@ else
 fi
 
 echo -e "${GREEN}✨ Setup completed successfully!${NC}"
+echo ""
+echo -e "${GREEN}🔧 Test the setup:${NC}"
+echo -e "   ${GREEN}claude --mcp-config $CONFIG_FILE --print \"Test the AppleScript tool by showing a dialog with 'Setup Complete!'\"${NC}"

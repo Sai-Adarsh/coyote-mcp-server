@@ -17,7 +17,7 @@ process.stderr.write = function(chunk: any, encoding?: any, callback?: any) {
 
 // Create an MCP server
 const server = new McpServer({
-  name: "coyote-user",
+  name: "coyote.*use",
   version: "1.0.0"
 });
 

@@ -20,7 +20,7 @@ Add to Claude Desktop configuration:
 ```json
 {
   "mcpServers": {
-    "coyote-user": {
+    "coyote.*use": {
       "command": "node",
       "args": ["/Users/saiadarshsivakumar/Desktop/coyote-mcp-server/build/index.js"]
     }
