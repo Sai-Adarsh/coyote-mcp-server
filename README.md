@@ -62,6 +62,14 @@ npm run build    # Build the server
 npm start        # Start manually for testing
 ```
 
+## Troubleshooting
+
+**Claude CLI showing old version after update:**
+If Claude CLI shows an outdated version error after running `claude update`, clear the shell's command cache:
+```bash
+hash -r
+```
+
 ## References
 
 - [TypeScript MCP SDK](https://github.com/modelcontextprotocol/typescript-sdk)
