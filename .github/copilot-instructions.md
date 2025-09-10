@@ -21,8 +21,19 @@ Add to Claude Desktop configuration:
 {
   "mcpServers": {
     "coyote.*use": {
+      "command": "coyote-mcp-server"
+    }
+  }
+}
+```
+
+Or use the absolute path if not globally installed:
+```json
+{
+  "mcpServers": {
+    "coyote.*use": {
       "command": "node",
-      "args": ["/Users/saiadarshsivakumar/Desktop/coyote-mcp-server/build/index.js"]
+      "args": ["<PROJECT_PATH>/build/index.js"]
     }
   }
 }

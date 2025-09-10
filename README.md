@@ -51,9 +51,23 @@ After setup, restart your client and use natural language to execute AppleScript
 
 **Claude CLI Usage:**
 ```bash
+# Basic usage (requires permission prompts)
 claude --mcp-config ~/.config/claude-cli/mcp.json --print "Use AppleScript to show a dialog"
-claude --mcp-config ~/.config/claude-cli/mcp.json  # Interactive mode
+
+# Skip permissions for testing/automation
+claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open Calculator"
+
+# Allow specific tools
+claude --mcp-config ~/.config/claude-cli/mcp.json --allowed-tools "run_applescript" --print "Use AppleScript to open Safari"
+
+# Interactive mode
+claude --mcp-config ~/.config/claude-cli/mcp.json
 ```
+
+**Permission Options:**
+- `--dangerously-skip-permissions` - Bypass all permission checks (recommended for testing)
+- `--allowed-tools "run_applescript"` - Pre-approve the AppleScript tool
+- `--permission-mode "bypassPermissions"` - Alternative permission bypass method
 
 ## Development
 
@@ -68,6 +82,25 @@ npm start        # Start manually for testing
 If Claude CLI shows an outdated version error after running `claude update`, clear the shell's command cache:
 ```bash
 hash -r
+```
+
+**Permission prompts not appearing:**
+If Claude CLI asks for permission but no prompt appears, use one of these flags:
+```bash
+# For testing/automation (bypasses all permissions)
+claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "YOUR_COMMAND"
+
+# Pre-approve specific tools
+claude --mcp-config ~/.config/claude-cli/mcp.json --allowed-tools "run_applescript" --print "YOUR_COMMAND"
+```
+
+**Testing the MCP server:**
+```bash
+# Test with a simple dialog
+claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to show a dialog with 'Hello World'"
+
+# Test app automation
+claude --mcp-config ~/.config/claude-cli/mcp.json --dangerously-skip-permissions --print "Use AppleScript to open Calculator"
 ```
 
 ## References
