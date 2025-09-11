@@ -1,5 +1,5 @@
 {
-  "name": "coyote.*use-mcp-server",
+  "name": "coyote-use-mcp-server",
   "version": "1.0.0",
   "description": "MCP server to execute AppleScript via osascript on macOS.",
   "main": "build/index.js",
@@ -15,7 +15,8 @@
     "setup-windsurf": "./setup-windsurf.sh",
     "setup-cursor": "./setup-cursor.sh",
     "setup-claude-cli": "./setup-claude-cli.sh",
-    "setup-all": "./setup-claude.sh && ./setup-vscode.sh && ./setup-windsurf.sh && ./setup-cursor.sh && ./setup-claude-cli.sh"
+    "setup-all": "./setup-claude.sh && ./setup-vscode.sh && ./setup-windsurf.sh && ./setup-cursor.sh && ./setup-claude-cli.sh",
+    "uninstall": "./uninstall.sh"
   },
   "files": [
     "build"

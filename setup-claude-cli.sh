@@ -74,7 +74,7 @@ fi
 # MCP Server configuration
 MCP_CONFIG='{
   "mcpServers": {
-    "coyote-user": {
+    "coyote-use": {
       "command": "coyote-mcp-server",
       "args": []
     }
@@ -99,8 +99,8 @@ if [ -f "$CONFIG_FILE" ] && [ -s "$CONFIG_FILE" ]; then
             existing.mcpServers = {};
         }
         
-        // Add or update the coyote-user server
-        existing.mcpServers['coyote-user'] = newConfig.mcpServers['coyote-user'];
+        // Add or update the coyote-use server
+        existing.mcpServers['coyote-use'] = newConfig.mcpServers['coyote-use'];
         
         // Write back the merged configuration
         fs.writeFileSync(path, JSON.stringify(existing, null, 2));
@@ -129,7 +129,7 @@ fi
 echo -e "${GREEN}🎉 Coyote MCP Server setup complete for Claude CLI!${NC}"
 echo ""
 echo -e "${BLUE}📋 Configuration Summary:${NC}"
-echo -e "   • Server: ${GREEN}coyote-user${NC}"
+echo -e "   • Server: ${GREEN}coyote-use${NC}"
 echo -e "   • Command: ${GREEN}coyote-mcp-server${NC}"
 echo -e "   • Config: ${GREEN}$CONFIG_FILE${NC}"
 echo ""

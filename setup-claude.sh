@@ -60,19 +60,19 @@ if [ -f "$CLAUDE_CONFIG_FILE" ]; then
         config.mcpServers = {};
     }
     
-    config.mcpServers['coyote.*use'] = {
+    config.mcpServers['coyote-use'] = {
         command: 'coyote-mcp-server'
     };
     
     fs.writeFileSync(path, JSON.stringify(config, null, 2));
-    console.log('✅ Added coyote.*use to existing Claude Desktop config');
+    console.log('✅ Added coyote-use to existing Claude Desktop config');
     "
 else
     # Create new config file
     cat > "$CLAUDE_CONFIG_FILE" << 'EOF'
 {
   "mcpServers": {
-    "coyote.*use": {
+    "coyote-use": {
       "command": "coyote-mcp-server"
     }
   }
@@ -88,7 +88,7 @@ echo "Next steps:"
 echo "1. Restart Claude Desktop completely (quit and reopen)"
 echo "2. Try asking Claude: 'Use AppleScript to show a dialog with Hello World'"
 echo ""
-echo "The coyote.*use MCP server is now configured and ready to use!"
+echo "The coyote-use MCP server is now configured and ready to use!"
 echo ""
 echo "For troubleshooting, check that the command works:"
 echo "  coyote-mcp-server"

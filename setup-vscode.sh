@@ -64,20 +64,20 @@ if [ -f "$VSCODE_MCP_FILE" ]; then
         config.inputs = [];
     }
     
-    config.servers['coyote.*use'] = {
+    config.servers['coyote-use'] = {
         type: 'stdio',
         command: 'coyote-mcp-server'
     };
     
     fs.writeFileSync(path, JSON.stringify(config, null, 2));
-    console.log('✅ Added coyote.*use to existing VS Code MCP config');
+    console.log('✅ Added coyote-use to existing VS Code MCP config');
     "
 else
     # Create new config file
     cat > "$VSCODE_MCP_FILE" << 'EOF'
 {
   "servers": {
-    "coyote.*use": {
+    "coyote-use": {
       "type": "stdio",
       "command": "coyote-mcp-server"
     }
@@ -96,7 +96,7 @@ echo "1. Restart VS Code completely"
 echo "2. Open GitHub Copilot Chat"
 echo "3. Try asking: 'Use AppleScript to show a dialog with Hello World'"
 echo ""
-echo "The coyote.*use MCP server is now configured for VS Code!"
+echo "The coyote-use MCP server is now configured for VS Code!"
 echo ""
 echo "For troubleshooting, check that the command works:"
 echo "  coyote-mcp-server"

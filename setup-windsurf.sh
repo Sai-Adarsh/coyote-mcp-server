@@ -64,7 +64,7 @@ fi
 # MCP Server configuration
 MCP_CONFIG='{
   "mcpServers": {
-    "coyote.*use": {
+    "coyote-use": {
       "command": "coyote-mcp-server",
       "args": []
     }
@@ -89,8 +89,8 @@ if [ -f "$CONFIG_FILE" ] && [ -s "$CONFIG_FILE" ]; then
             existing.mcpServers = {};
         }
         
-        // Add or update the coyote.*use server
-        existing.mcpServers['coyote.*use'];
+        // Add or update the coyote-use server
+        existing.mcpServers['coyote-use'] = newConfig.mcpServers['coyote-use'];
         
         // Write back the merged configuration
         fs.writeFileSync(path, JSON.stringify(existing, null, 2));
@@ -119,7 +119,7 @@ fi
 echo -e "${GREEN}🎉 Coyote MCP Server setup complete for Windsurf!${NC}"
 echo ""
 echo -e "${BLUE}📋 Configuration Summary:${NC}"
-echo -e "   • Server: ${GREEN}coyote.*use${NC}"
+echo -e "   • Server: ${GREEN}coyote-use${NC}"
 echo -e "   • Command: ${GREEN}coyote-mcp-server${NC}"
 echo -e "   • Config: ${GREEN}$CONFIG_FILE${NC}"
 echo ""
@@ -127,7 +127,7 @@ echo -e "${BLUE}🚀 Next Steps:${NC}"
 echo -e "   1. ${YELLOW}Restart Windsurf${NC} to load the new MCP configuration"
 echo -e "   2. Open the ${YELLOW}Cascade panel${NC} in Windsurf"
 echo -e "   3. Click on ${YELLOW}Plugins${NC} in the top right menu"
-echo -e "   4. Look for ${YELLOW}coyote.*use${NC} server and click the refresh button"
+echo -e "   4. Look for ${YELLOW}coyote-use${NC} server and click the refresh button"
 echo -e "   5. Enable the ${YELLOW}run_applescript${NC} tool"
 echo ""
 echo -e "${BLUE}🔧 Available Tool:${NC}"
